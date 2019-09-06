@@ -1,0 +1,8 @@
+<mat-list>
+   <ng-container *ngFor="let i of data.items">
+      <mat-list-item (click)="onSelect(i)">
+         <p matLine>{{ i[data.mainField] }}</p>
+         <span matLine class="light-grey-fg">{{ i[data.secondaryField] }}</span>
+      </mat-list-item>
+   </ng-container>
+</mat-list>

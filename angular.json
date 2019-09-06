@@ -119,6 +119,41 @@
           }
         }
       }
+    },
+    "kmm-components": {
+      "projectType": "library",
+      "root": "projects/kmm-components",
+      "sourceRoot": "projects/kmm-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/kmm-components/tsconfig.lib.json",
+            "project": "projects/kmm-components/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kmm-components/src/test.ts",
+            "tsConfig": "projects/kmm-components/tsconfig.spec.json",
+            "karmaConfig": "projects/kmm-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kmm-components/tsconfig.lib.json",
+              "projects/kmm-components/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "kmm-components"
 }

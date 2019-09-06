@@ -1,0 +1,35 @@
+.mat-list {
+   min-width: 150px;
+   width: auto;
+   max-width: 300px;
+   min-height: 32px;
+   height: auto;
+   max-height: 350px;
+   overflow-y: auto;
+}
+
+.mat-list-item {
+   padding: 16px 16px 30px 16px;
+   border-bottom: 1px solid lightgrey;
+}
+
+.mat-list-item__primary-text {
+   font-size: 12px;
+   min-height: 20px;
+   height: 20px;
+   max-width: 100%;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+
+   &::before, &::after {
+      height: 4px !important;
+   }
+}
+
+.mat-list-item__secondary-text {
+   max-width: 100%;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}

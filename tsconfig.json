@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "kmm-components": [
+        "dist/kmm-components"
+      ],
+      "kmm-components/*": [
+        "dist/kmm-components/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

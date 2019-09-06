@@ -1,0 +1,36 @@
+:host {
+   display: flex;
+   align-items: flex-start;
+
+   & > *:not(:last-child) {
+      margin-right: 16px;
+   }
+}
+
+.main-icon {
+   align-self: center;
+}
+
+.fullwidth {
+   flex: 1 1 auto;
+}
+
+.spinning {
+           animation: spin 1750ms linear 0ms infinite;
+   -webkit-animation: spin 1750ms linear 0ms infinite;
+      -moz-animation: spin 1750ms linear 0ms infinite;
+       -ms-animation: spin 1750ms linear 0ms infinite;
+        -o-animation: spin 1750ms linear 0ms infinite;
+}
+
+@keyframes spin {
+   0% {
+       transform:rotate(360deg) scale(0.7);
+   }
+   50% {
+      transform: rotate(180deg) scale(1);
+   }
+   100% {
+       transform:rotate(0deg) scale(0.7);
+   }
+}
