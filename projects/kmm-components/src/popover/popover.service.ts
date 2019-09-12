@@ -118,6 +118,15 @@ export class PopoverService {
             panelClass: ["top", "right"],
             offsetX: arrowOffset,
             offsetY: panelOffset
+         },
+         // center center
+         {
+            overlayX: "center",
+            overlayY: "center",
+            originX: "center",
+            originY: "center",
+            panelClass: ["center", "center"],
+            offsetY: panelOffset
          }
       ];
 
@@ -142,30 +151,43 @@ export class PopoverService {
          popoverConfig
       );
 
-      if (componentOrTemplate instanceof TemplateRef) {
-         this.componentToAttach = new TemplatePortal(componentOrTemplate, null, {
-            $implicit: config.data,
-            popover: popoverRef
-         });
-      } else {
-         this.componentToAttach = new ComponentPortal(componentOrTemplate, null,
+      let popover = overlayRef.attach(
+         new ComponentPortal(
+            PopoverComponent,
+            null,
             new PortalInjector(
                this.injector,
-               new WeakMap<any, any>([
-                  [POPOVER_DATA, config.data],
-                  [PopoverRef, popoverRef]
-               ])
-            ));
-      }
-
-      const ref = overlayRef.attach(new ComponentPortal(
-         PopoverComponent,
-         null,
-         new PortalInjector(
-            this.injector,
-            new WeakMap<any, any>([[PopoverRef, popoverRef]])
+               new WeakMap<any, any>([[PopoverRef, popoverRef]])
+            )
          )
-      ));
+      ).instance;
+
+      if (popover && componentOrTemplate) {
+         if (componentOrTemplate instanceof TemplateRef) {
+            // rendering a provided template dynamically
+            popover.attachTemplatePortal(
+               new TemplatePortal(componentOrTemplate, null, {
+                  $implicit: config.data,
+                  popover: popoverRef
+               })
+            );
+         } else {
+            // rendering a provided component dynamically
+            popover.attachComponentPortal(
+               new ComponentPortal(
+                  componentOrTemplate,
+                  null,
+                  new PortalInjector(
+                     this.injector,
+                     new WeakMap<any, any>([
+                        [POPOVER_DATA, config.data],
+                        [PopoverRef, popoverRef]
+                     ])
+                  )
+               )
+            );
+         }
+      }
 
       return popoverRef;
    }

@@ -1,10 +1,9 @@
 import {
-   CdkPortalOutletAttachedRef
+   CdkPortalOutletAttachedRef, BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal
 } from "@angular/cdk/portal";
 import {
-   Component
+   Component, ViewChild, ComponentRef, EmbeddedViewRef
 } from "@angular/core";
-import { PopoverService } from "../popover.service";
 
 /**
  * Internal component that wraps user-provided popover content.
@@ -14,9 +13,18 @@ import { PopoverService } from "../popover.service";
    templateUrl: "./popover.component.html",
    styleUrls: ["./popover.component.scss"]
 })
-export class PopoverComponent {
+export class PopoverComponent extends BasePortalOutlet {
+   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet: CdkPortalOutlet;
 
-   constructor(public popoverService: PopoverService) {}
+   attachComponentPortal<T>(
+      componentPortal: ComponentPortal<any>
+   ): ComponentRef<T> {
+      return this.portalOutlet.attachComponentPortal(componentPortal);
+   }
+
+   attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+      return this.portalOutlet.attachTemplatePortal(portal);
+   }
 
    handleAttached(event: CdkPortalOutletAttachedRef) {
       let node = event["_viewContainerRef"];

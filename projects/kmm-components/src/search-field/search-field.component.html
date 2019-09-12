@@ -1,6 +1,9 @@
-<mat-icon class="main-icon" fontSet="{{ searchConfig.iconFontSet }}">{{
-   searchConfig.icon
-}}</mat-icon>
+<mat-icon
+   class="main-icon"
+   *ngIf="searchConfig.icon"
+   fontSet="{{ searchConfig.iconFontSet }}">
+   {{ searchConfig.icon }}
+</mat-icon>
 <mat-form-field appearence="outline">
    <mat-label>{{ searchConfig.fieldLabel }}</mat-label>
    <input
@@ -14,14 +17,14 @@
       *ngIf="searchConfig.searchAction"
       matSuffix
       [ngClass]="{ clickable: searchConfig.minLength == 0, spinning: loading }"
-      (click)="handleTyping()"
-      >{{ !loading ? "search" : "loop" }}</mat-icon
-   >
+      (click)="handleTyping()">
+      {{ !loading ? "search" : "loop" }}
+   </mat-icon>
 </mat-form-field>
 <mat-form-field
    appearence="outline"
    *ngIf="searchConfig.descriptionLabel"
    class="fullwidth">
    <mat-label>{{ searchConfig.descriptionLabel }}</mat-label>
-   <input matInput [formControl]="searchConfig.description">
-></mat-form-field>
+   <input matInput [formControl]="searchConfig.description" />
+</mat-form-field>
