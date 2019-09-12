@@ -16,6 +16,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PopoverRef } from '../popover/popover-ref';
 import { KmmSearchFieldConfig } from './search-field-config.interface';
 import { Subscription } from 'rxjs';
+import { isFunction } from 'util';
 
 @Component({
    selector: 'kmm-search-field',
@@ -219,15 +220,17 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
                   callObject
                );
 
-               if (typeof temp.subscribe === 'function') {
+               if (isFunction(temp.subscribe)) {
                   this.callSubscription = temp.subscribe(
                      this.handleSuccess,
                      this.handleFailure
                   );
-               } else {
+               } else if (isFunction(temp.then)) {
                   this.callSubscription = temp
                      .then(this.handleSuccess)
                      .catch(this.handleFailure);
+               } else {
+                  console.error('No backend callback was defined.');
                }
             }
          } else if (this.oldField == value && this.data && this.data.length) {
@@ -240,7 +243,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
       }
    }
 
-   handleSuccess(res: any) {
+   handleSuccess = (res: any) => {
       if (res && res[this.searchConfig.searchAction.responseObject]) {
          this.data = res[this.searchConfig.searchAction.responseObject];
          this.handleResult();
@@ -248,7 +251,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
       this.loading = false;
    }
 
-   handleFailure(err: any) {
+   handleFailure = (err: any) => {
       this.loading = false;
    }
 
