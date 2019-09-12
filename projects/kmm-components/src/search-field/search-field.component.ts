@@ -8,28 +8,28 @@ import {
    OnDestroy,
    ViewChild,
    ElementRef
-} from "@angular/core";
-import { PopoverService } from "../popover/popover.service";
-import { SearchFieldListComponent } from "../search-field-list/search-field-list.component";
-import { Validators } from "@angular/forms";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { PopoverRef } from "../popover/popover-ref";
-import { KmmSearchFieldConfig } from "./search-field-config.interface";
-import { Subscription } from "rxjs";
+} from '@angular/core';
+import { PopoverService } from '../popover/popover.service';
+import { SearchFieldListComponent } from '../search-field-list/search-field-list.component';
+import { Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { PopoverRef } from '../popover/popover-ref';
+import { KmmSearchFieldConfig } from './search-field-config.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
-   selector: "kmm-search-field",
-   templateUrl: "./search-field.component.html",
-   styleUrls: ["./search-field.component.scss"]
+   selector: 'kmm-search-field',
+   templateUrl: './search-field.component.html',
+   styleUrls: ['./search-field.component.scss']
 })
 export class SearchFieldComponent implements OnInit, OnDestroy {
    // configuration object input
-   @Input("config") public searchConfig: Partial<KmmSearchFieldConfig>;
+   @Input('config') public searchConfig: Partial<KmmSearchFieldConfig>;
 
    // emitted events
-   @Output("onSelect") private onSelectEmitter: EventEmitter<any>;
+   @Output('onSelect') private onSelectEmitter: EventEmitter<any>;
 
-   @ViewChild("target", { static: true }) target: ElementRef<HTMLElement>;
+   @ViewChild('target', { static: true }) target: ElementRef<HTMLElement>;
 
    public data: Array<any>;
    private oldField: any;
@@ -50,8 +50,8 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
    ngOnInit() {
       // set icon font
-      if (typeof this.searchConfig.iconFontSet == "undefined") {
-         this.searchConfig.iconFontSet = "material-icons-outlined";
+      if (typeof this.searchConfig.iconFontSet == 'undefined') {
+         this.searchConfig.iconFontSet = 'material-icons-outlined';
       }
 
       // init main field control
@@ -67,7 +67,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
       // set validators
       let validators = [];
       if (
-         typeof this.searchConfig.maxLength != "undefined" &&
+         typeof this.searchConfig.maxLength != 'undefined' &&
          parseInt(this.searchConfig.maxLength) > 0
       ) {
          this.maxLengthValidated = parseInt(this.searchConfig.maxLength);
@@ -76,7 +76,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
          );
       }
       if (
-         typeof this.searchConfig.minLength != "undefined" &&
+         typeof this.searchConfig.minLength != 'undefined' &&
          parseInt(this.searchConfig.minLength) > 0
       ) {
          this.minLengthValidated = parseInt(this.searchConfig.minLength);
@@ -84,14 +84,15 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
             Validators.minLength(parseInt(this.searchConfig.minLength))
          );
       }
-      if (typeof this.searchConfig.pattern != "undefined") {
+      if (typeof this.searchConfig.pattern != 'undefined') {
          let pattern;
-         if (this.searchConfig.pattern == "numberAndText") {
-            pattern = "^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ0-9\.\-\_\*\s]*$";
-         } else if (this.searchConfig.pattern == "number") {
-            pattern = "^[0-9]*$";
-         } else if (this.searchConfig.pattern == "text") {
-            pattern = "^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ\.\-\_\*\s]*$";
+         if (this.searchConfig.pattern == 'numberAndText') {
+            pattern =
+               '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ0-9.-_*s]*$';
+         } else if (this.searchConfig.pattern == 'number') {
+            pattern = '^[0-9]*$';
+         } else if (this.searchConfig.pattern == 'text') {
+            pattern = '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ.-_*s]*$';
          }
          validators.push(Validators.pattern(pattern));
          this.inputPattern = new RegExp(pattern);
@@ -116,20 +117,20 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
             this.setSelectedItem(this.data[0]);
          } else {
             if (this.searchConfig.description) {
-               this.searchConfig.description.setValue("");
+               this.searchConfig.description.setValue('');
             }
             this.showPopover();
          }
       } else if (
          !this.searchConfig.field.value ||
-         this.searchConfig.field.value == ""
+         this.searchConfig.field.value == ''
       ) {
          if (this.searchConfig.description) {
             this.searchConfig.description.setValue(null);
          }
       } else {
          if (this.searchConfig.description) {
-            this.searchConfig.description.setValue("Registro não encontrado");
+            this.searchConfig.description.setValue('Registro não encontrado');
          }
       }
    }
@@ -178,8 +179,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
             this.setSelectedItem(null);
          } else if (
             (this.oldField != value ||
-               (this.oldField == value && !this.data)
-            ) &&
+               (this.oldField == value && !this.data)) &&
             (parseInt(this.searchConfig.minLength) == 0 ||
                (parseInt(this.searchConfig.minLength) > 0 &&
                   value &&
@@ -188,7 +188,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
             if (
                this.searchConfig.searchAction &&
                typeof this.searchConfig.searchAction.backendCall ==
-                  "function" &&
+                  'function' &&
                this.searchConfig.searchAction.operation
             ) {
                if (
@@ -207,32 +207,28 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
                this.loading = true;
 
-               this.callSubscription = this.searchConfig.searchAction
-                  .backendCall({
-                     operation: this.searchConfig.searchAction.operation,
-                     module: this.searchConfig.searchAction.module
-                        ? this.searchConfig.searchAction.module
-                        : undefined,
-                     parameters: params
-                  })
-                  .subscribe(
-                     (res: any) => {
-                        if (
-                           res &&
-                           res[this.searchConfig.searchAction.responseObject]
-                        ) {
-                           this.data =
-                              res[
-                                 this.searchConfig.searchAction.responseObject
-                              ];
-                           this.handleResult();
-                        }
-                        this.loading = false;
-                     },
-                     err => {
-                        this.loading = false;
-                     }
+               const callObject = {
+                  module: this.searchConfig.searchAction.module
+                     ? this.searchConfig.searchAction.module
+                     : undefined,
+                  operation: this.searchConfig.searchAction.operation,
+                  parameters: params
+               };
+
+               let temp: any = this.searchConfig.searchAction.backendCall(
+                  callObject
+               );
+
+               if (typeof temp.subscribe === 'function') {
+                  this.callSubscription = temp.subscribe(
+                     this.handleSuccess,
+                     this.handleFailure
                   );
+               } else {
+                  this.callSubscription = temp
+                     .then(this.handleSuccess)
+                     .catch(this.handleFailure);
+               }
             }
          } else if (this.oldField == value && this.data && this.data.length) {
             if (this.data.length == 1) {
@@ -244,11 +240,27 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
       }
    }
 
+   handleSuccess(res: any) {
+      if (res && res[this.searchConfig.searchAction.responseObject]) {
+         this.data = res[this.searchConfig.searchAction.responseObject];
+         this.handleResult();
+      }
+      this.loading = false;
+   }
+
+   handleFailure(err: any) {
+      this.loading = false;
+   }
+
    showPopover() {
       this.closePopover();
 
       setTimeout(() => {
-         if (typeof this.searchConfig.searchAction != "undefined" && this.target && this.target['elementRef']['nativeElement']) {
+         if (
+            typeof this.searchConfig.searchAction != 'undefined' &&
+            this.target &&
+            this.target['elementRef']['nativeElement']
+         ) {
             this.popoverRef = this.popoverService.open(
                SearchFieldListComponent,
                this.target['elementRef']['nativeElement'],
@@ -258,14 +270,14 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
                      mainField: this.searchConfig.fieldName,
                      secondaryField: this.searchConfig.descriptionName
                   },
-                  panelClass: "popover-over-dialog",
-                  backdropClass: "invisible-backdrop"
+                  panelClass: 'popover-over-dialog',
+                  backdropClass: 'invisible-backdrop'
                }
             );
          }
          if (this.popoverRef && this.popoverRef.afterClosed) {
             this.popoverRef.afterClosed().subscribe(res => {
-               if (res != "-1") {
+               if (res != '-1') {
                   if (res) {
                      this.setSelectedItem(res);
                   } else {
@@ -286,7 +298,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
    closePopover() {
       if (this.popoverRef) {
-         this.popoverRef.close("-1");
+         this.popoverRef.close('-1');
       }
    }
 }
