@@ -129,10 +129,12 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
          if (this.searchConfig.description) {
             this.searchConfig.description.setValue(null);
          }
+         this.onSelectEmitter.emit(null);
       } else {
          if (this.searchConfig.description) {
             this.searchConfig.description.setValue('Registro não encontrado');
          }
+         this.onSelectEmitter.emit(null);
       }
    }
 
