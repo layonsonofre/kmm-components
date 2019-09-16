@@ -262,11 +262,11 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
          if (
             typeof this.searchConfig.searchAction != 'undefined' &&
             this.target &&
-            this.target['elementRef']['nativeElement']
+            this.target.nativeElement
          ) {
             this.popoverRef = this.popoverService.open(
                SearchFieldListComponent,
-               this.target['elementRef']['nativeElement'],
+               this.target.nativeElement,
                {
                   data: {
                      items: this.data,

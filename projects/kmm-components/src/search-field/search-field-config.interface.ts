@@ -8,9 +8,11 @@ export interface KmmSearchFieldConfig {
    field: FormControl;
    fieldName: string;
    fieldLabel: string;
+   fieldPlaceholder: string;
    description: FormControl;
    descriptionName: string;
    descriptionLabel: string;
+   descriptionPlaceholder: string;
 
    // config properties
    minLength: any;

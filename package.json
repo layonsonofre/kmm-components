@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:lib": "ng build --project kmm-components"
+    "build:lib": "ng build --project kmm-components",
+    "publish": "cd dist/kmm-components && npm publish"
   },
   "private": true,
   "dependencies": {
