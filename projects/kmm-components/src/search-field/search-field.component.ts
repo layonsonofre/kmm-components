@@ -89,11 +89,11 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
          let pattern;
          if (this.searchConfig.pattern == 'numberAndText') {
             pattern =
-               '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ0-9.-_*s]*$';
+               '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ0-9.-_*\s\']*$';
          } else if (this.searchConfig.pattern == 'number') {
             pattern = '^[0-9]*$';
          } else if (this.searchConfig.pattern == 'text') {
-            pattern = '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ.-_*s]*$';
+            pattern = '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ.-_*\s\']*$';
          }
          validators.push(Validators.pattern(pattern));
          this.inputPattern = new RegExp(pattern);
