@@ -2,9 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { PopoverActionsComponent } from "../popover-actions/popover-actions.component";
-import {
-   Overlay
-} from "@angular/cdk/overlay";
+
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -31,15 +29,14 @@ import { CustomMaskDirective } from './custom-mask.directive';
       PopoverActionsComponent,
       SearchFieldComponent,
       SearchFieldListComponent,
-      CustomMaskDirective
+      CustomMaskDirective,
    ],
    declarations: [
       PopoverActionsComponent,
       SearchFieldComponent,
       SearchFieldListComponent,
-      CustomMaskDirective
+      CustomMaskDirective,
    ],
-   entryComponents: [PopoverActionsComponent, SearchFieldListComponent],
-   providers: [Overlay]
+   entryComponents: [PopoverActionsComponent, SearchFieldListComponent]
 })
 export class KmmComponentsModule {}

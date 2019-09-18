@@ -277,7 +277,8 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
                   },
                   panelClass: 'popover-over-dialog',
                   backdropClass: 'invisible-backdrop'
-               }
+               },
+               this.searchConfig.preferredPositions
             );
          }
          if (this.popoverRef && this.popoverRef.afterClosed) {

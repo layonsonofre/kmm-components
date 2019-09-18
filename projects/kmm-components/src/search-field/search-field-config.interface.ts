@@ -21,4 +21,7 @@ export interface KmmSearchFieldConfig {
 
    // action properties
    searchAction: any;
+
+   // ui properties
+   preferredPositions?: Array<string>
 }

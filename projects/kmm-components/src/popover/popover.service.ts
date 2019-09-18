@@ -33,6 +33,11 @@ const defaultConfig: PopoverConfig = {
    arrowSize: 20
 };
 
+export interface ExtendedConnectionPositionPair extends ConnectionPositionPair {
+   id: string;
+   selected?: boolean;
+};
+
 /**
  * Service to open modal and manage popovers.
  */
@@ -47,7 +52,8 @@ export class PopoverService {
    open<D = any>(
       componentOrTemplate: ComponentType<any> | TemplateRef<any>,
       target: ElementRef | HTMLElement,
-      config: Partial<PopoverConfig> = {}
+      config: Partial<PopoverConfig> = {},
+      preferredPositions?: Array<string>
    ): PopoverRef<D> {
       const popoverConfig: PopoverConfig = Object.assign(
          {},
@@ -60,9 +66,10 @@ export class PopoverService {
       const panelOffset = arrowSize / 2;
 
       // preferred positions, in order of priority
-      const positions: ConnectionPositionPair[] = [
+      const positions: ExtendedConnectionPositionPair[] = [
          // bottom center
          {
+            id: "bottom center",
             overlayX: "center",
             overlayY: "top",
             originX: "center",
@@ -72,6 +79,7 @@ export class PopoverService {
          },
          // top center
          {
+            id: "top center",
             overlayX: "center",
             overlayY: "bottom",
             originX: "center",
@@ -81,6 +89,7 @@ export class PopoverService {
          },
          // top left
          {
+            id: "top left",
             overlayX: "start",
             overlayY: "bottom",
             originX: "center",
@@ -91,6 +100,7 @@ export class PopoverService {
          },
          // top right
          {
+            id: "top right",
             overlayX: "end",
             overlayY: "bottom",
             originX: "center",
@@ -101,6 +111,7 @@ export class PopoverService {
          },
          // bottom left
          {
+            id: "bottom left",
             overlayX: "start",
             overlayY: "top",
             originX: "center",
@@ -111,6 +122,7 @@ export class PopoverService {
          },
          // bottom right
          {
+            id: "bottom right",
             overlayX: "end",
             overlayY: "top",
             originX: "center",
@@ -121,6 +133,7 @@ export class PopoverService {
          },
          // center center
          {
+            id: "center center",
             overlayX: "center",
             overlayY: "center",
             originX: "center",
@@ -130,12 +143,33 @@ export class PopoverService {
          }
       ];
 
+      let customPositions = [];
+      if (preferredPositions && preferredPositions.length > 0) {
+         preferredPositions.forEach(pref => {
+            positions.forEach(p => {
+               if (p.id === pref) {
+                  customPositions.push(p);
+                  p.selected = true;
+               }
+            });
+         });
+         positions.forEach(p => {
+            if (!p.selected) {
+               customPositions.push(p);
+            }
+         });
+      } else {
+         customPositions = positions;
+      }
+
+      console.log(customPositions);
+
       const positionStrategy = this.overlay
          .position()
          .flexibleConnectedTo(target)
          .withPush(false)
          .withFlexibleDimensions(false)
-         .withPositions(positions);
+         .withPositions(customPositions);
 
       const overlayRef = this.overlay.create({
          hasBackdrop: true,
