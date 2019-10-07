@@ -16,6 +16,7 @@
          searchConfig.fieldPlaceholder ? searchConfig.fieldPlaceholder : ''
       }}"
       #target
+      autocomplete="off"
    />
    <mat-icon
       *ngIf="searchConfig.searchAction"
@@ -30,6 +31,7 @@
    appearence="outline"
    *ngIf="searchConfig.descriptionLabel"
    class="fullwidth"
+   autocomplete="off"
 >
    <mat-label>{{ searchConfig.descriptionLabel }}</mat-label>
    <input
