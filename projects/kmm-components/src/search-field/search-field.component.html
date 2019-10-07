@@ -5,7 +5,10 @@
 >
    {{ searchConfig.icon }}
 </mat-icon>
-<mat-form-field appearance="outline">
+<mat-form-field
+   appearance="outline"
+   [ngClass]="{'fullwidth': !searchConfig.descriptionLabel}"
+   >
    <mat-label>{{ searchConfig.fieldLabel }}</mat-label>
    <input
       matInput
