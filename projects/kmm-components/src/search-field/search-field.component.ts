@@ -94,6 +94,8 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
             pattern = '^[0-9]*$';
          } else if (this.searchConfig.pattern == 'text') {
             pattern = '^[a-zA-ZáéíóúÁÉÍÓÚçÇãõÃÕüÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ.-_*\\s\']*$';
+         } else {
+            pattern = this.searchConfig.pattern;
          }
          validators.push(Validators.pattern(pattern));
          this.inputPattern = new RegExp(pattern);

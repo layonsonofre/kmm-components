@@ -162,8 +162,6 @@ export class PopoverService {
          customPositions = positions;
       }
 
-      console.log(customPositions);
-
       const positionStrategy = this.overlay
          .position()
          .flexibleConnectedTo(target)
